@@ -56,9 +56,9 @@
 /* The raw header used when not using DNS protocol */
 const unsigned char raw_header[RAW_HDR_LEN] = { 0x10, 0xd1, 0x9e, 0x00 };
 
-/* daemon(3) exists only in 4.4BSD or later, and in GNU libc */
+/* my_daemon(3) exists only in 4.4BSD or later, and in GNU libc */
 #if !defined(ANDROID) && !defined(WINDOWS32) && !(defined(BSD) && (BSD >= 199306)) && !defined(__GLIBC__) && !defined(__HAIKU__)
-static int daemon(int nochdir, int noclose)
+static int my_daemon(int nochdir, int noclose)
 {
  	int fd, i;
 
@@ -282,7 +282,7 @@ do_detach(void)
 {
 #ifndef WINDOWS32
 	fprintf(stderr, "Detaching from terminal...\n");
-	daemon(0, 0);
+	my_daemon(0, 0);
 	umask(0);
 	alarm(0);
 #else
